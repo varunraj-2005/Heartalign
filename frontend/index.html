@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heartalign — Discover Your Compatibility</title>
+  <meta name="description" content="Heartalign is a beautiful couples compatibility quiz that reveals how aligned you and your partner truly are — through categories like values, trust, intimacy and daily habits." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== LOADER ===== -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader-content">
+      <div class="heart-glass-wrapper">
+        <svg class="heart-glass-svg" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- Glass heart outline -->
+          <defs>
+            <clipPath id="heartClip">
+              <path d="M100,160 C60,130 10,100 10,55 C10,30 30,10 55,10 C70,10 85,18 100,32 C115,18 130,10 145,10 C170,10 190,30 190,55 C190,100 140,130 100,160 Z"/>
+            </clipPath>
+            <linearGradient id="liquidGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ff6b9d"/>
+              <stop offset="50%" stop-color="#e63946"/>
+              <stop offset="100%" stop-color="#9b0020"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Liquid fill (animated via rect clipped to heart shape) -->
+          <g clip-path="url(#heartClip)">
+            <rect class="liquid-fill" x="0" y="170" width="200" height="170" fill="url(#liquidGrad)" />
+            <!-- Wave on top of liquid -->
+            <path class="liquid-wave" d="M-10,0 Q20,-10 50,0 Q80,10 110,0 Q140,-10 170,0 Q200,10 220,0 L220,40 L-10,40 Z" fill="url(#liquidGrad)" opacity="0.6"/>
+          </g>
+
+          <!-- Glass heart border (drawn on top for overlay effect) -->
+          <path class="heart-border"
+            d="M100,160 C60,130 10,100 10,55 C10,30 30,10 55,10 C70,10 85,18 100,32 C115,18 130,10 145,10 C170,10 190,30 190,55 C190,100 140,130 100,160 Z"
+            fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="3" filter="url(#glow)"/>
+
+          <!-- Shine on left -->
+          <ellipse cx="65" cy="45" rx="10" ry="18" fill="rgba(255,255,255,0.18)" transform="rotate(-30 65 45)"/>
+          <!-- Shine small -->
+          <ellipse cx="75" cy="30" rx="4" ry="7" fill="rgba(255,255,255,0.25)" transform="rotate(-30 75 30)"/>
+        </svg>
+      </div>
+      <p class="loader-text">Heartalign</p>
+      <p class="loader-sub">Discovering your connection…</p>
+    </div>
+  </div>
+
+  <!-- ===== APP ROOT ===== -->
+  <div id="app" class="app hidden">
+
+    <!-- === FLOATING PARTICLES BG === -->
+    <div class="particles" aria-hidden="true" id="particles"></div>
+
+    <!-- === HEADER === -->
+    <header class="header" id="main-header">
+      <div class="header-inner">
+        <div class="logo" id="logo-home-btn">
+          <svg class="logo-heart" viewBox="0 0 40 36" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20,32 C12,26 2,20 2,11 C2,6 6,2 11,2 C14,2 17,4 20,7 C23,4 26,2 29,2 C34,2 38,6 38,11 C38,20 28,26 20,32 Z" fill="url(#logoGrad)"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#e63946"/>
+                <stop offset="100%" stop-color="#ff6b9d"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="logo-text">Heartalign</span>
+        </div>
+        <nav class="header-nav" id="header-nav">
+          <!-- Dynamic nav items injected by JS -->
+        </nav>
+      </div>
+    </header>
+
+    <!-- === SCREENS === -->
+    <main class="main-content">
+
+      <!-- SCREEN: LANDING -->
+      <section class="screen active" id="screen-landing">
+        <div class="landing-hero">
+          <div class="hero-badge">✨ Couples Compatibility Quiz</div>
+          <h1 class="hero-title">
+            How aligned are<br/>
+            <span class="title-gradient">you &amp; your partner?</span>
+          </h1>
+          <p class="hero-subtitle">
+            Answer 20 beautifully crafted questions across 6 life dimensions.<br/>
+            Receive a deep, personalized compatibility report — together.
+          </p>
+
+          <div class="hero-cta-group">
+            <button class="btn btn-primary btn-xl" id="btn-start-new">
+              <span class="btn-icon">💖</span>
+              Start a New Session
+            </button>
+            <button class="btn btn-ghost btn-xl" id="btn-join-session">
+              <span class="btn-icon">🔗</span>
+              Join with Invite Code
+            </button>
+          </div>
+
+          <div class="hero-categories">
+            <div class="cat-chip"><span>🎯</span> Values &amp; Goals</div>
+            <div class="cat-chip"><span>💬</span> Trust &amp; Communication</div>
+            <div class="cat-chip"><span>⚡</span> Conflict Style</div>
+            <div class="cat-chip"><span>💞</span> Intimacy</div>
+            <div class="cat-chip"><span>🏠</span> Daily Life</div>
+            <div class="cat-chip"><span>🎉</span> Fun &amp; Trivia</div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="floating-card fc-1">
+            <div class="fc-score">94%</div>
+            <div class="fc-label">Intimacy Match</div>
+          </div>
+          <div class="floating-card fc-2">
+            <div class="fc-score">87%</div>
+            <div class="fc-label">Values Alignment</div>
+          </div>
+          <div class="floating-card fc-3">
+            <div class="fc-score">78%</div>
+            <div class="fc-label">Overall Compatibility</div>
+          </div>
+          <div class="big-heart-visual">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bigHeartGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#1d3557"/>
+                  <stop offset="50%" stop-color="#e63946"/>
+                  <stop offset="100%" stop-color="#ff6b9d"/>
+                </linearGradient>
+                <filter id="bigGlow">
+                  <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                  <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <path class="big-heart-path"
+                d="M100,160 C60,130 10,100 10,55 C10,30 30,10 55,10 C70,10 85,18 100,32 C115,18 130,10 145,10 C170,10 190,30 190,55 C190,100 140,130 100,160 Z"
+                fill="url(#bigHeartGrad)" filter="url(#bigGlow)" opacity="0.9"/>
+              <path d="M100,160 C60,130 10,100 10,55 C10,30 30,10 55,10 C70,10 85,18 100,32 C115,18 130,10 145,10 C170,10 190,30 190,55 C190,100 140,130 100,160 Z"
+                fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN: CREATE SESSION (Partner 1) -->
+      <section class="screen" id="screen-create">
+        <div class="form-card">
+          <div class="form-card-icon">💖</div>
+          <h2 class="form-card-title">Start Your Journey</h2>
+          <p class="form-card-sub">You'll answer 20 questions, then share a unique invite link with your partner to join and answer the same questions independently.</p>
+
+          <div class="input-group">
+            <label class="input-label" for="input-p1-name">Your Name</label>
+            <input class="input-field" id="input-p1-name" type="text" placeholder="e.g. Sofia" maxlength="40" autocomplete="off"/>
+          </div>
+
+          <button class="btn btn-primary btn-full" id="btn-create-session">
+            <span>Continue &rarr;</span>
+          </button>
+          <button class="btn btn-ghost btn-sm mt-sm" id="btn-back-from-create">← Back</button>
+        </div>
+      </section>
+
+      <!-- SCREEN: INVITE PARTNER -->
+      <section class="screen" id="screen-invite">
+        <div class="form-card wide">
+          <div class="form-card-icon">🔗</div>
+          <h2 class="form-card-title">Invite Your Partner</h2>
+          <p class="form-card-sub" id="invite-intro-text">Share this code or link with your partner — they'll use it to join and answer the same questions separately.</p>
+
+          <div class="invite-code-display" id="invite-code-box">
+            <span class="invite-label">Your Invite Code</span>
+            <div class="invite-code-value" id="invite-code-text">HEART-XXXX</div>
+            <button class="btn btn-outline btn-sm" id="btn-copy-code">📋 Copy Code</button>
+          </div>
+
+          <div class="divider-or"><span>or share link</span></div>
+
+          <div class="share-link-box">
+            <input class="input-field share-link-input" id="invite-link-text" type="text" readonly/>
+            <button class="btn btn-outline btn-sm" id="btn-copy-link">📋 Copy</button>
+          </div>
+
+          <div class="invite-steps">
+            <div class="istep"><div class="istep-num">1</div><div>You've answered all 20 questions first</div></div>
+            <div class="istep"><div class="istep-num">2</div><div>Your partner opens the link and answers independently</div></div>
+            <div class="istep"><div class="istep-num">3</div><div>Results unlock instantly once both submit</div></div>
+          </div>
+
+          <button class="btn btn-primary btn-full" id="btn-start-quiz-p1">
+            💖 Begin My Questions
+          </button>
+        </div>
+      </section>
+
+      <!-- SCREEN: JOIN SESSION (Partner 2) -->
+      <section class="screen" id="screen-join">
+        <div class="form-card">
+          <div class="form-card-icon">🌹</div>
+          <h2 class="form-card-title">Join Your Partner</h2>
+          <p class="form-card-sub">Enter the invite code your partner shared and your name to begin the quiz.</p>
+
+          <div class="input-group">
+            <label class="input-label" for="input-invite-code">Invite Code</label>
+            <input class="input-field code-input" id="input-invite-code" type="text" placeholder="HEART-XXXX" maxlength="10" autocomplete="off"/>
+          </div>
+
+          <div class="input-group" id="join-name-group" style="display:none;">
+            <label class="input-label" for="input-p2-name">Your Name</label>
+            <input class="input-field" id="input-p2-name" type="text" placeholder="e.g. Marco" maxlength="40" autocomplete="off"/>
+            <div class="join-partner-info" id="join-partner-info"></div>
+          </div>
+
+          <button class="btn btn-primary btn-full" id="btn-join-submit">
+            <span id="btn-join-label">Verify Code →</span>
+          </button>
+          <div class="error-msg hidden" id="join-error"></div>
+          <button class="btn btn-ghost btn-sm mt-sm" id="btn-back-from-join">← Back</button>
+        </div>
+      </section>
+
+      <!-- SCREEN: QUIZ -->
+      <section class="screen" id="screen-quiz">
+        <div class="quiz-layout">
+          <!-- Progress bar -->
+          <div class="quiz-header">
+            <div class="quiz-meta">
+              <span class="quiz-partner-badge" id="quiz-partner-label">Partner 1</span>
+              <span class="quiz-progress-label" id="quiz-progress-label">Question 1 of 20</span>
+            </div>
+            <div class="quiz-progress-bar">
+              <div class="quiz-progress-fill" id="quiz-progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="quiz-categories-bar" id="quiz-categories-bar"></div>
+          </div>
+
+          <!-- Question card -->
+          <div class="question-card" id="question-card">
+            <div class="question-category-tag" id="q-category-tag">Category</div>
+            <h2 class="question-prompt" id="q-prompt">Question text</h2>
+            <p class="question-subtitle" id="q-subtitle">Subtitle</p>
+
+            <!-- Multiple choice options -->
+            <div class="options-grid" id="options-grid"></div>
+
+            <!-- Scale options -->
+            <div class="scale-container hidden" id="scale-container">
+              <div class="scale-labels">
+                <span id="scale-label-low"></span>
+                <span id="scale-label-high"></span>
+              </div>
+              <div class="scale-buttons" id="scale-buttons"></div>
+            </div>
+
+            <!-- Open ended textarea -->
+            <div class="open-ended-container hidden" id="open-ended-container">
+              <textarea class="open-textarea" id="open-textarea" placeholder="Type your answer here…" rows="4" maxlength="500"></textarea>
+              <div class="char-count" id="char-count">0/500</div>
+            </div>
+
+            <button class="btn btn-primary btn-full" id="btn-next-question" disabled>
+              Next Question →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN: WAITING -->
+      <section class="screen" id="screen-waiting">
+        <div class="waiting-card">
+          <div class="waiting-heart-anim" aria-hidden="true">
+            <svg class="waiting-heart-svg" viewBox="0 0 80 72" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40,64 C24,52 4,40 4,22 C4,12 12,4 22,4 C28,4 34,7 40,13 C46,7 52,4 58,4 C68,4 76,12 76,22 C76,40 56,52 40,64 Z" fill="url(#waitGrad)"/>
+              <defs>
+                <linearGradient id="waitGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#e63946"/>
+                  <stop offset="100%" stop-color="#ff6b9d"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h2 class="waiting-title" id="waiting-title">Your answers are saved! 🎉</h2>
+          <p class="waiting-sub" id="waiting-sub">Waiting for your partner to complete their answers…</p>
+          <div class="waiting-status-row">
+            <div class="partner-status" id="p1-status-badge">
+              <div class="ps-dot ps-done"></div>
+              <span id="p1-status-name">Partner 1</span>
+              <span class="ps-tag done">Submitted ✓</span>
+            </div>
+            <div class="partner-status" id="p2-status-badge">
+              <div class="ps-dot ps-pending"></div>
+              <span id="p2-status-name">Partner 2</span>
+              <span class="ps-tag pending" id="p2-status-tag">Answering…</span>
+            </div>
+          </div>
+          <div class="waiting-pulse-row">
+            <span class="pulse-dot"></span>
+            <span class="pulse-dot"></span>
+            <span class="pulse-dot"></span>
+          </div>
+          <p class="waiting-hint">This page refreshes automatically. You can leave and come back.</p>
+        </div>
+      </section>
+
+      <!-- SCREEN: RESULTS -->
+      <section class="screen" id="screen-results">
+        <div class="results-layout">
+
+          <!-- Results header -->
+          <div class="results-header">
+            <div class="results-hearts" aria-hidden="true">💖</div>
+            <h1 class="results-title" id="results-title">Compatibility Report</h1>
+            <p class="results-names" id="results-names">Sofia &amp; Marco</p>
+          </div>
+
+          <!-- Big score circle -->
+          <div class="score-circle-container">
+            <svg class="score-ring" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#e63946"/>
+                  <stop offset="100%" stop-color="#ff6b9d"/>
+                </linearGradient>
+              </defs>
+              <circle class="ring-bg" cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="12"/>
+              <circle class="ring-fill" id="score-ring-fill" cx="100" cy="100" r="88" fill="none" stroke="url(#ringGrad)" stroke-width="12"
+                stroke-linecap="round" stroke-dasharray="553" stroke-dashoffset="553"
+                transform="rotate(-90 100 100)"/>
+            </svg>
+            <div class="score-circle-inner">
+              <div class="score-number" id="score-number">0</div>
+              <div class="score-label">Compatibility</div>
+              <div class="score-tier" id="score-tier">—</div>
+            </div>
+          </div>
+
+          <!-- Category breakdown -->
+          <div class="section-heading">Category Breakdown</div>
+          <div class="category-breakdown" id="category-breakdown">
+            <!-- Injected by JS -->
+          </div>
+
+          <!-- Conflict flags -->
+          <div id="conflict-section" class="conflict-section hidden">
+            <div class="section-heading">⚡ Dynamic Differences</div>
+            <p class="section-intro">These contrasting styles can spark rich conversations. Use them as talking points!</p>
+            <div id="conflict-flags-list"></div>
+          </div>
+
+          <!-- Reflections -->
+          <div id="reflections-section" class="reflections-section hidden">
+            <div class="section-heading">💬 Side-by-Side Reflections</div>
+            <p class="section-intro">These open-ended answers aren't scored — they're for you two to read together.</p>
+            <div id="reflections-list"></div>
+          </div>
+
+          <!-- Disclaimer -->
+          <div class="disclaimer-box" id="disclaimer-box"></div>
+
+          <!-- Actions -->
+          <div class="results-actions">
+            <button class="btn btn-primary" id="btn-start-again">💖 Start a New Session</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- === TOAST === -->
+    <div class="toast hidden" id="toast"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
