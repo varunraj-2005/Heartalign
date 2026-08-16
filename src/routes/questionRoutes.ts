@@ -20,7 +20,8 @@ router.get('/', (req: Request, res: Response) => {
 // GET /api/questions/:id - Fetch single question
 router.get('/:id', (req: Request, res: Response) => {
   try {
-    const question = dbGetQuestionById(req.params.id);
+    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const question = dbGetQuestionById(id);
     if (!question) {
       res.status(404).json({ success: false, error: 'Question not found' });
       return;

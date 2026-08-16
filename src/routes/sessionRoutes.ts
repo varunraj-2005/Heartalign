@@ -19,6 +19,11 @@ import { Session } from '../types';
 
 const router = Router();
 
+function getParamString(param: any): string {
+  if (Array.isArray(param)) return param[0] || '';
+  return String(param || '');
+}
+
 // Helper to generate readable 6-char code like HEART-7X92
 function generateInviteCode(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -86,7 +91,7 @@ router.post('/sessions', (req: Request, res: Response) => {
 // GET /api/sessions/code/:code - Lookup session details by invite code
 router.get('/sessions/code/:code', (req: Request, res: Response) => {
   try {
-    const code = req.params.code;
+    const code = getParamString(req.params.code);
     const session = dbGetSessionByCode(code);
 
     if (!session) {
@@ -128,7 +133,6 @@ router.post('/sessions/join', (req: Request, res: Response) => {
     }
 
     if (session.partner2_id && session.partner2_name) {
-      // Already joined, allow re-entry if same name or return existing info
       res.json({
         success: true,
         message: 'Re-entered session',
@@ -173,7 +177,8 @@ router.post('/sessions/join', (req: Request, res: Response) => {
 // GET /api/sessions/:id/status - Check real-time submission status
 router.get('/sessions/:id/status', (req: Request, res: Response) => {
   try {
-    const session = dbGetSessionById(req.params.id);
+    const sessionId = getParamString(req.params.id);
+    const session = dbGetSessionById(sessionId);
     if (!session) {
       res.status(404).json({ success: false, error: 'Session not found' });
       return;
@@ -216,7 +221,7 @@ router.get('/sessions/:id/status', (req: Request, res: Response) => {
 // POST /api/sessions/:id/answers - Submit answers for a partner
 router.post('/sessions/:id/answers', (req: Request, res: Response) => {
   try {
-    const sessionId = req.params.id;
+    const sessionId = getParamString(req.params.id);
     const { partner_id, answers } = req.body;
 
     if (!partner_id || !answers || typeof answers !== 'object') {
@@ -282,7 +287,7 @@ router.post('/sessions/:id/answers', (req: Request, res: Response) => {
 // GET /api/sessions/:id/results - Retrieve calculated score results
 router.get('/sessions/:id/results', (req: Request, res: Response) => {
   try {
-    const sessionId = req.params.id;
+    const sessionId = getParamString(req.params.id);
     const session = dbGetSessionById(sessionId);
 
     if (!session) {
@@ -293,7 +298,6 @@ router.get('/sessions/:id/results', (req: Request, res: Response) => {
     let scoreResult = dbGetScoreBySessionId(sessionId);
 
     if (!scoreResult) {
-      // Check if both have answers and calculate on the fly
       const p1Answers = dbGetPartnerAnswers(session.id, session.partner1_id);
       let p2Answers: Record<string, string | number> = {};
       if (session.partner2_id) {
@@ -340,7 +344,7 @@ router.get('/sessions/:id/results', (req: Request, res: Response) => {
 // GET /api/couples/:coupleId/history - Score trends over time for a couple
 router.get('/couples/:coupleId/history', (req: Request, res: Response) => {
   try {
-    const coupleId = req.params.coupleId;
+    const coupleId = getParamString(req.params.coupleId);
     const history = dbGetCoupleHistory(coupleId);
     res.json({
       success: true,

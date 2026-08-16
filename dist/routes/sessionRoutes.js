@@ -5,6 +5,11 @@ const uuid_1 = require("uuid");
 const database_1 = require("../db/database");
 const scoringEngine_1 = require("../services/scoringEngine");
 const router = (0, express_1.Router)();
+function getParamString(param) {
+    if (Array.isArray(param))
+        return param[0] || '';
+    return String(param || '');
+}
 // Helper to generate readable 6-char code like HEART-7X92
 function generateInviteCode() {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -64,7 +69,7 @@ router.post('/sessions', (req, res) => {
 // GET /api/sessions/code/:code - Lookup session details by invite code
 router.get('/sessions/code/:code', (req, res) => {
     try {
-        const code = req.params.code;
+        const code = getParamString(req.params.code);
         const session = (0, database_1.dbGetSessionByCode)(code);
         if (!session) {
             res.status(404).json({ success: false, error: 'Invalid invite code or session expired' });
@@ -101,7 +106,6 @@ router.post('/sessions/join', (req, res) => {
             return;
         }
         if (session.partner2_id && session.partner2_name) {
-            // Already joined, allow re-entry if same name or return existing info
             res.json({
                 success: true,
                 message: 'Re-entered session',
@@ -143,7 +147,8 @@ router.post('/sessions/join', (req, res) => {
 // GET /api/sessions/:id/status - Check real-time submission status
 router.get('/sessions/:id/status', (req, res) => {
     try {
-        const session = (0, database_1.dbGetSessionById)(req.params.id);
+        const sessionId = getParamString(req.params.id);
+        const session = (0, database_1.dbGetSessionById)(sessionId);
         if (!session) {
             res.status(404).json({ success: false, error: 'Session not found' });
             return;
@@ -182,7 +187,7 @@ router.get('/sessions/:id/status', (req, res) => {
 // POST /api/sessions/:id/answers - Submit answers for a partner
 router.post('/sessions/:id/answers', (req, res) => {
     try {
-        const sessionId = req.params.id;
+        const sessionId = getParamString(req.params.id);
         const { partner_id, answers } = req.body;
         if (!partner_id || !answers || typeof answers !== 'object') {
             res.status(400).json({ success: false, error: 'partner_id and answers object are required' });
@@ -230,7 +235,7 @@ router.post('/sessions/:id/answers', (req, res) => {
 // GET /api/sessions/:id/results - Retrieve calculated score results
 router.get('/sessions/:id/results', (req, res) => {
     try {
-        const sessionId = req.params.id;
+        const sessionId = getParamString(req.params.id);
         const session = (0, database_1.dbGetSessionById)(sessionId);
         if (!session) {
             res.status(404).json({ success: false, error: 'Session not found' });
@@ -238,7 +243,6 @@ router.get('/sessions/:id/results', (req, res) => {
         }
         let scoreResult = (0, database_1.dbGetScoreBySessionId)(sessionId);
         if (!scoreResult) {
-            // Check if both have answers and calculate on the fly
             const p1Answers = (0, database_1.dbGetPartnerAnswers)(session.id, session.partner1_id);
             let p2Answers = {};
             if (session.partner2_id) {
@@ -275,7 +279,7 @@ router.get('/sessions/:id/results', (req, res) => {
 // GET /api/couples/:coupleId/history - Score trends over time for a couple
 router.get('/couples/:coupleId/history', (req, res) => {
     try {
-        const coupleId = req.params.coupleId;
+        const coupleId = getParamString(req.params.coupleId);
         const history = (0, database_1.dbGetCoupleHistory)(coupleId);
         res.json({
             success: true,
