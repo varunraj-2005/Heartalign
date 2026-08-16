@@ -16,7 +16,8 @@ app.use(cors());
 app.use(express.json());
 
 // Serve static interactive test client
-app.use(express.static(path.resolve(__dirname, '../public')));
+const frontendPath = path.resolve(__dirname, '../../frontend');
+app.use(express.static(frontendPath));
 
 // Initialize DB schema & question seed bank
 initDatabase();
@@ -37,7 +38,7 @@ app.use('/api/health', (req: Request, res: Response) => {
 
 // Fallback route to serve interactive API dashboard
 app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, '../public/index.html'));
+  res.sendFile(path.resolve(frontendPath, 'index.html'));
 });
 
 // Start Server
