@@ -1,94 +1,223 @@
-import Database from 'better-sqlite3';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 import { SEED_QUESTIONS } from '../data/questions.seed';
+import {
+  AnswerRecord,
+  CoupleHistory,
+  HistoryEntry,
+  Question,
+  ScoreResult,
+  Session
+} from '../types';
 
-const dbPath = path.resolve(__dirname, '../../heartalign.db');
-const db = new Database(dbPath);
+interface DatabaseSchema {
+  questions: Question[];
+  couples: Array<{ id: string; created_at: string }>;
+  sessions: Session[];
+  answers: AnswerRecord[];
+  scores: ScoreResult[];
+}
 
-db.pragma('journal_mode = WAL');
+const dbFilePath = path.resolve(__dirname, '../../heartalign.db.json');
 
-export function initDatabase() {
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS questions (
-      id TEXT PRIMARY KEY,
-      category TEXT NOT NULL,
-      question_type TEXT NOT NULL,
-      prompt TEXT NOT NULL,
-      subtitle TEXT,
-      options TEXT,
-      scoring_rules TEXT
-    );
+function loadDB(): DatabaseSchema {
+  if (!fs.existsSync(dbFilePath)) {
+    const initialData: DatabaseSchema = {
+      questions: SEED_QUESTIONS,
+      couples: [],
+      sessions: [],
+      answers: [],
+      scores: []
+    };
+    saveDB(initialData);
+    return initialData;
+  }
 
-    CREATE TABLE IF NOT EXISTS couples (
-      id TEXT PRIMARY KEY,
-      created_at TEXT NOT NULL
-    );
-
-    CREATE TABLE IF NOT EXISTS sessions (
-      id TEXT PRIMARY KEY,
-      invite_code TEXT UNIQUE NOT NULL,
-      couple_id TEXT NOT NULL,
-      partner1_id TEXT NOT NULL,
-      partner1_name TEXT NOT NULL,
-      partner2_id TEXT,
-      partner2_name TEXT,
-      status TEXT NOT NULL,
-      created_at TEXT NOT NULL,
-      completed_at TEXT,
-      FOREIGN KEY (couple_id) REFERENCES couples(id)
-    );
-
-    CREATE TABLE IF NOT EXISTS answers (
-      id TEXT PRIMARY KEY,
-      session_id TEXT NOT NULL,
-      partner_id TEXT NOT NULL,
-      question_id TEXT NOT NULL,
-      answer_value TEXT NOT NULL,
-      submitted_at TEXT NOT NULL,
-      FOREIGN KEY (session_id) REFERENCES sessions(id),
-      FOREIGN KEY (question_id) REFERENCES questions(id)
-    );
-
-    CREATE TABLE IF NOT EXISTS scores (
-      id TEXT PRIMARY KEY,
-      session_id TEXT UNIQUE NOT NULL,
-      couple_id TEXT NOT NULL,
-      overall_score REAL NOT NULL,
-      category_breakdown TEXT NOT NULL,
-      conflict_flags TEXT NOT NULL,
-      reflections TEXT NOT NULL,
-      calculated_at TEXT NOT NULL,
-      FOREIGN KEY (session_id) REFERENCES sessions(id),
-      FOREIGN KEY (couple_id) REFERENCES couples(id)
-    );
-  `);
-
-  // Seed questions if empty
-  const countRow = db.prepare('SELECT COUNT(*) as count FROM questions').get() as { count: number };
-  if (countRow.count === 0) {
-    const insertStmt = db.prepare(`
-      INSERT INTO questions (id, category, question_type, prompt, subtitle, options, scoring_rules)
-      VALUES (@id, @category, @question_type, @prompt, @subtitle, @options, @scoring_rules)
-    `);
-
-    const insertMany = db.transaction((questions) => {
-      for (const q of questions) {
-        insertStmt.run({
-          id: q.id,
-          category: q.category,
-          question_type: q.question_type,
-          prompt: q.prompt,
-          subtitle: q.subtitle || null,
-          options: q.options ? JSON.stringify(q.options) : null,
-          scoring_rules: q.scoring_rules ? JSON.stringify(q.scoring_rules) : null,
-        });
-      }
-    });
-
-    insertMany(SEED_QUESTIONS);
-    console.log(`[Database] Successfully seeded ${SEED_QUESTIONS.length} relationship questions.`);
+  try {
+    const raw = fs.readFileSync(dbFilePath, 'utf-8');
+    const data = JSON.parse(raw) as DatabaseSchema;
+    
+    // Ensure questions are seeded if missing
+    if (!data.questions || data.questions.length === 0) {
+      data.questions = SEED_QUESTIONS;
+      saveDB(data);
+    }
+    return data;
+  } catch (err) {
+    console.error('[DB] Error loading db file, re-initializing:', err);
+    const initialData: DatabaseSchema = {
+      questions: SEED_QUESTIONS,
+      couples: [],
+      sessions: [],
+      answers: [],
+      scores: []
+    };
+    saveDB(initialData);
+    return initialData;
   }
 }
 
-export default db;
+function saveDB(data: DatabaseSchema): void {
+  fs.writeFileSync(dbFilePath, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+export function initDatabase() {
+  loadDB();
+  console.log('[Database] Heartalign JSON storage engine initialized successfully.');
+}
+
+// ==========================================
+// Question Operations
+// ==========================================
+export function dbGetQuestions(): Question[] {
+  const data = loadDB();
+  return data.questions;
+}
+
+export function dbGetQuestionById(id: string): Question | undefined {
+  const data = loadDB();
+  return data.questions.find((q) => q.id === id);
+}
+
+// ==========================================
+// Couple Operations
+// ==========================================
+export function dbCreateCouple(coupleId: string): void {
+  const data = loadDB();
+  if (!data.couples.some((c) => c.id === coupleId)) {
+    data.couples.push({
+      id: coupleId,
+      created_at: new Date().toISOString()
+    });
+    saveDB(data);
+  }
+}
+
+// ==========================================
+// Session Operations
+// ==========================================
+export function dbCreateSession(session: Session): Session {
+  const data = loadDB();
+  data.sessions.push(session);
+  saveDB(data);
+  return session;
+}
+
+export function dbGetSessionById(id: string): Session | undefined {
+  const data = loadDB();
+  return data.sessions.find((s) => s.id === id);
+}
+
+export function dbGetSessionByCode(code: string): Session | undefined {
+  const data = loadDB();
+  const cleanCode = code.trim().toUpperCase();
+  return data.sessions.find((s) => s.invite_code.toUpperCase() === cleanCode);
+}
+
+export function dbUpdateSession(session: Session): void {
+  const data = loadDB();
+  const index = data.sessions.findIndex((s) => s.id === session.id);
+  if (index !== -1) {
+    data.sessions[index] = session;
+    saveDB(data);
+  }
+}
+
+// ==========================================
+// Answer Operations
+// ==========================================
+export function dbSaveAnswers(
+  session_id: string,
+  partner_id: string,
+  answers: Record<string, string | number>
+): void {
+  const data = loadDB();
+  const now = new Date().toISOString();
+
+  // Remove previous answers by this partner for this session to avoid duplicates
+  data.answers = data.answers.filter(
+    (a) => !(a.session_id === session_id && a.partner_id === partner_id)
+  );
+
+  for (const [qId, val] of Object.entries(answers)) {
+    data.answers.push({
+      id: `ans_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+      session_id,
+      partner_id,
+      question_id: qId,
+      answer_value: val,
+      submitted_at: now
+    });
+  }
+
+  saveDB(data);
+}
+
+export function dbGetSessionAnswers(session_id: string): AnswerRecord[] {
+  const data = loadDB();
+  return data.answers.filter((a) => a.session_id === session_id);
+}
+
+export function dbGetPartnerAnswers(
+  session_id: string,
+  partner_id: string
+): Record<string, string | number> {
+  const data = loadDB();
+  const records = data.answers.filter(
+    (a) => a.session_id === session_id && a.partner_id === partner_id
+  );
+
+  const resultMap: Record<string, string | number> = {};
+  for (const r of records) {
+    resultMap[r.question_id] = r.answer_value;
+  }
+  return resultMap;
+}
+
+// ==========================================
+// Score Operations
+// ==========================================
+export function dbSaveScore(scoreResult: ScoreResult): void {
+  const data = loadDB();
+  const idx = data.scores.findIndex((s) => s.session_id === scoreResult.session_id);
+  if (idx !== -1) {
+    data.scores[idx] = scoreResult;
+  } else {
+    data.scores.push(scoreResult);
+  }
+  saveDB(data);
+}
+
+export function dbGetScoreBySessionId(session_id: string): ScoreResult | undefined {
+  const data = loadDB();
+  return data.scores.find((s) => s.session_id === session_id);
+}
+
+export function dbGetCoupleHistory(couple_id: string): CoupleHistory {
+  const data = loadDB();
+  const scores = data.scores
+    .filter((s) => s.couple_id === couple_id)
+    .sort((a, b) => new Date(a.calculated_at).getTime() - new Date(b.calculated_at).getTime());
+
+  const historyEntries: HistoryEntry[] = scores.map((s) => {
+    const categoryScores: Record<string, number> = {};
+    for (const [catName, catDetail] of Object.entries(s.category_breakdown)) {
+      categoryScores[catName] = catDetail.score;
+    }
+
+    return {
+      session_id: s.session_id,
+      date: s.calculated_at,
+      partner1_name: s.partner1_name,
+      partner2_name: s.partner2_name,
+      overall_score: s.overall_score,
+      category_scores: categoryScores as any
+    };
+  });
+
+  return {
+    couple_id,
+    total_quizzes: historyEntries.length,
+    history: historyEntries
+  };
+}
