@@ -114,6 +114,7 @@ export interface ScoreResult {
   reflections: SideBySideReflection[];
   disclaimer: string;
   calculated_at: string;
+  ai_analysis?: string;
 }
 
 export interface HistoryEntry {
