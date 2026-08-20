@@ -137,10 +137,11 @@ document.getElementById('btn-create-session').addEventListener('click', async ()
     document.getElementById('invite-code-text').textContent = data.session.invite_code;
     document.getElementById('invite-intro-text').textContent =
       `Hi ${name}! Share this code with your partner so they can join and answer the same questions independently.`;
-    const shareUrl = data.session.share_url || `${window.location.origin}/join/${data.session.invite_code}`;
+    const shareUrl = `${window.location.origin}/join/${data.session.invite_code}`;
     document.getElementById('invite-link-text').value = shareUrl;
 
     showScreen('invite');
+    pollForPartnerJoin();
   } catch (err) {
     showToast('Error: ' + err.message);
   } finally {
@@ -163,11 +164,30 @@ document.getElementById('btn-copy-link').addEventListener('click', () => {
 });
 
 /* ================================================================
-   START QUIZ — Partner 1
+   WAIT FOR PARTNER (P1)
    ================================================================ */
-document.getElementById('btn-start-quiz-p1').addEventListener('click', () => {
-  loadQuestionsAndStartQuiz();
-});
+let joinPollInterval;
+async function pollForPartnerJoin() {
+  const statusEl = document.getElementById('invite-waiting-status');
+  if (statusEl) statusEl.style.display = 'flex';
+  
+  joinPollInterval = setInterval(async () => {
+    try {
+      const res = await fetch(`${API}/api/sessions/code/${state.inviteCode}`);
+      const data = await res.json();
+      if (data.success && data.session.is_full) {
+        clearInterval(joinPollInterval);
+        state.p2Name = data.session.partner2_name;
+        showToast(`${state.p2Name} joined! Starting quiz...`);
+        setTimeout(() => {
+          loadQuestionsAndStartQuiz();
+        }, 1500);
+      }
+    } catch (e) {
+      console.error('Error polling for partner join', e);
+    }
+  }, 2000);
+}
 
 /* ================================================================
    JOIN SESSION (Partner 2) — Two-step: verify code, then name
@@ -411,7 +431,10 @@ document.getElementById('btn-next-question').addEventListener('click', async () 
   card.style.opacity = '0';
   card.style.transform = 'translateY(12px)';
 
-  await wait(250);
+  // Trigger floating hearts
+  spawnFloatingHearts();
+
+  await wait(350);
 
   state.currentQ++;
 
@@ -430,6 +453,23 @@ document.getElementById('btn-next-question').addEventListener('click', async () 
   card.style.opacity = '1';
   card.style.transform = 'translateY(0)';
 });
+
+function spawnFloatingHearts() {
+  const container = document.createElement('div');
+  container.className = 'rising-hearts-container';
+  document.body.appendChild(container);
+  
+  for (let i = 0; i < 6; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.style.left = `${Math.random() * 80 + 10}%`;
+    heart.style.animationDuration = `${1 + Math.random() * 0.8}s`;
+    heart.style.animationDelay = `${Math.random() * 0.3}s`;
+    container.appendChild(heart);
+  }
+  
+  setTimeout(() => container.remove(), 2500);
+}
 
 function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
 
@@ -671,6 +711,7 @@ document.getElementById('btn-start-again').addEventListener('click', () => {
     p1Name: null, p2Name: null, questions: [], currentQ: 0, answers: {},
   });
   clearInterval(state.pollInterval);
+  clearInterval(joinPollInterval);
 
   // Reset join form
   document.getElementById('input-invite-code').value = '';
