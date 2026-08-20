@@ -27,7 +27,7 @@
   --off-white: #fafafa;
   --text-primary:   #000000;
   --text-secondary: #8b0000;
-  --text-muted:     rgba(0,0,0,0.38);
+  --text-primary:   #000000;
 
   /* Glass */
   --glass-bg:     rgba(255, 255, 255, 0.8);
@@ -74,7 +74,7 @@ html {
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background: var(--navy-950);
+  background: var(--white);
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
@@ -87,7 +87,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: var(--grad-hero);
+  background: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -290,7 +290,7 @@ body {
    LANDING SCREEN
    ============================================================ */
 #screen-landing {
-  background: var(--grad-hero);
+  background: var(--white);
   position: relative;
   overflow: hidden;
   align-items: center;
@@ -748,7 +748,7 @@ body {
    QUIZ SCREEN
    ============================================================ */
 #screen-quiz {
-  background: var(--grad-hero);
+  background: var(--white);
   padding: var(--gap-md);
   align-items: flex-start;
 }
@@ -857,7 +857,7 @@ body {
 }
 
 .question-prompt {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Love Fairy', serif;
   font-size: clamp(1.2rem, 3vw, 1.55rem);
   font-weight: 600;
   line-height: 1.4;
@@ -890,7 +890,7 @@ body {
   cursor: pointer;
   transition: all var(--dur-fast) var(--ease-out);
   color: #333;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Love Fairy', sans-serif;
 }
 
 .option-btn:hover {
