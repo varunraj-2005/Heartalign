@@ -7,7 +7,7 @@
 /* ── CSS Custom Properties ── */
 :root {
   /* Colors */
-  --navy-950: #ffffff;
+  --navy-950: #ffffff; /* background */
   --navy-900: #f8f9fa;
   --navy-800: #f1f3f5;
   --navy-700: #e9ecef;
@@ -16,7 +16,7 @@
   --blue-400: #adb5bd;
   --blue-300: #868e96;
 
-  --red-700:  #700018;
+  --red-700:  #8b0000; /* dark red */
   --red-600:  #9b0020;
   --red-500:  #c1121f;
   --red-400:  #e63946;
@@ -25,8 +25,8 @@
 
   --white:    #ffffff;
   --off-white: #fafafa;
-  --text-primary:   rgba(0,0,0,0.95);
-  --text-secondary: rgba(0,0,0,0.65);
+  --text-primary:   #000000;
+  --text-secondary: #8b0000;
   --text-muted:     rgba(0,0,0,0.38);
 
   /* Glass */
