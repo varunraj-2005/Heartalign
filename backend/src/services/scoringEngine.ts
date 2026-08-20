@@ -8,6 +8,9 @@ import {
   SideBySideReflection,
   AnswerRecord
 } from '../types';
+import Groq from 'groq-sdk';
+
+const groq = process.env.GROQ_API_KEY ? new Groq({ apiKey: process.env.GROQ_API_KEY }) : null;
 
 export function calculateQuestionScore(
   question: Question,
@@ -127,7 +130,7 @@ export function generateCategoryInsight(
   }
 }
 
-export function computeCompatibilityScore(
+export async function computeCompatibilityScore(
   questions: Question[],
   partner1Answers: Record<string, string | number>,
   partner2Answers: Record<string, string | number>,
@@ -135,7 +138,7 @@ export function computeCompatibilityScore(
   couple_id: string,
   partner1_name: string,
   partner2_name: string
-): ScoreResult {
+): Promise<ScoreResult> {
   const categoryQuestionScores: Record<Category, number[]> = {
     'Values & Life Goals': [],
     'Trust & Communication': [],
@@ -211,6 +214,30 @@ export function computeCompatibilityScore(
 
   const overallScore = Math.round((weightedSum / (totalWeightApplied || 1)) * 10) / 10;
 
+  let ai_analysis = undefined;
+  if (groq) {
+    try {
+      const completion = await groq.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: "You are an empathetic relationship expert. Given a couple's compatibility score, category breakdown, and conflict areas, write a short, warm, and insightful 2-paragraph analysis of their relationship dynamic. Focus on the positive but offer a gentle, constructive piece of advice based on their conflict flags or lowest score. Do not use markdown."
+          },
+          {
+            role: "user",
+            content: `Couple: ${partner1_name} & ${partner2_name}\nOverall Score: ${overallScore}/100\nCategories: ${Object.values(categoryBreakdown).map((c: any) => `${c.category} (${c.score})`).join(', ')}\nConflicts: ${conflictFlags.map(c => c.note).join(' | ')}`
+          }
+        ],
+        model: "llama3-8b-8192",
+        temperature: 0.7,
+        max_tokens: 250,
+      });
+      ai_analysis = completion.choices[0]?.message?.content || undefined;
+    } catch (e) {
+      console.error("Groq AI Error:", e);
+    }
+  }
+
   return {
     session_id,
     couple_id,
@@ -221,6 +248,7 @@ export function computeCompatibilityScore(
     conflict_flags: conflictFlags,
     reflections,
     disclaimer: 'Heartalign is designed for reflection, self-discovery, and fun. It is not a clinical relationship assessment or psychological diagnostic tool.',
-    calculated_at: new Date().toISOString()
+    calculated_at: new Date().toISOString(),
+    ai_analysis
   };
 }

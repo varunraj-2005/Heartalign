@@ -260,7 +260,7 @@ router.post('/sessions/:id/answers', (req: Request, res: Response) => {
 
       // Compute compatibility score
       const questions = dbGetQuestions();
-      const scoreResult = computeCompatibilityScore(
+      const scoreResult = await computeCompatibilityScore(
         questions,
         p1Answers,
         p2Answers,
