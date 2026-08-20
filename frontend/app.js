@@ -675,6 +675,16 @@ function renderResults(r) {
     reflSec.classList.add('hidden');
   }
 
+  // AI Analysis
+  const aiSec = document.getElementById('ai-analysis-section');
+  const aiContent = document.getElementById('ai-analysis-content');
+  if (r.ai_analysis) {
+    aiSec.classList.remove('hidden');
+    aiContent.textContent = r.ai_analysis;
+  } else {
+    aiSec.classList.add('hidden');
+  }
+
   // Disclaimer
   document.getElementById('disclaimer-box').textContent = r.disclaimer || '';
 }
