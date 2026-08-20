@@ -219,7 +219,7 @@ router.get('/sessions/:id/status', (req: Request, res: Response) => {
 });
 
 // POST /api/sessions/:id/answers - Submit answers for a partner
-router.post('/sessions/:id/answers', (req: Request, res: Response) => {
+router.post('/sessions/:id/answers', async (req: Request, res: Response) => {
   try {
     const sessionId = getParamString(req.params.id);
     const { partner_id, answers } = req.body;
