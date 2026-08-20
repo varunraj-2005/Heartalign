@@ -9,7 +9,7 @@ import sessionRoutes from './routes/sessionRoutes';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 505;
 
 // Middleware
 app.use(cors());
