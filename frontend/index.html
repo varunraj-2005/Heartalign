@@ -199,14 +199,15 @@
           </div>
 
           <div class="invite-steps">
-            <div class="istep"><div class="istep-num">1</div><div>You've answered all 20 questions first</div></div>
-            <div class="istep"><div class="istep-num">2</div><div>Your partner opens the link and answers independently</div></div>
-            <div class="istep"><div class="istep-num">3</div><div>Results unlock instantly once both submit</div></div>
+            <div class="istep"><div class="istep-num">1</div><div>Share the link with your partner</div></div>
+            <div class="istep"><div class="istep-num">2</div><div>They join using their name</div></div>
+            <div class="istep"><div class="istep-num">3</div><div>The quiz will start automatically for both of you!</div></div>
           </div>
 
-          <button class="btn btn-primary btn-full" id="btn-start-quiz-p1">
-            💖 Begin My Questions
-          </button>
+          <div class="waiting-partner-pulse" id="invite-waiting-status">
+            <span>Waiting for your partner to join</span>
+            <span class="pulse-dot"></span><span class="pulse-dot"></span><span class="pulse-dot"></span>
+          </div>
         </div>
       </section>
 
@@ -369,6 +370,15 @@
             <div class="section-heading">💬 Side-by-Side Reflections</div>
             <p class="section-intro">These open-ended answers aren't scored — they're for you two to read together.</p>
             <div id="reflections-list"></div>
+          </div>
+
+          <!-- AI Analysis -->
+          <div id="ai-analysis-section" class="reflections-section hidden">
+            <div class="section-heading">✨ AI Love Analysis</div>
+            <p class="section-intro">A personalized reflection on your dynamic, analyzed by AI.</p>
+            <div id="ai-analysis-content" style="background:#f9f9f9; padding: 1.5rem; border-radius: var(--r-md); font-style: italic; line-height: 1.6;">
+              Generating analysis... <span class="pulse-dot"></span><span class="pulse-dot"></span><span class="pulse-dot"></span>
+            </div>
           </div>
 
           <!-- Disclaimer -->

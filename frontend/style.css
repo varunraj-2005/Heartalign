@@ -1479,6 +1479,17 @@ body {
   .share-link-box { flex-direction: column; }
 }
 
+.waiting-partner-pulse {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+}
+
 /* ── Rising Hearts Animation ── */
 .rising-hearts-container {
   position: fixed;
