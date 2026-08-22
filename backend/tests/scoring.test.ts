@@ -141,19 +141,27 @@ const mockP2Answers: Record<string, string | number> = {
   fun_3: 'cooking_baking'
 };
 
-const fullResult = computeCompatibilityScore(
-  SEED_QUESTIONS,
-  mockP1Answers,
-  mockP2Answers,
-  'ses_123',
-  'cpl_456',
-  'Alex',
-  'Jordan'
-);
+async function runTests() {
+  const fullResult = await computeCompatibilityScore(
+    SEED_QUESTIONS,
+    mockP1Answers,
+    mockP2Answers,
+    'ses_123',
+    'cpl_456',
+    'Alex',
+    'Jordan'
+  );
 
-assert(fullResult.overall_score > 80, 'Overall score for near-identical answers should be > 80');
-assert(fullResult.conflict_flags.length > 0, 'Full test should detect at least 1 complementary conflict flag');
-assert(fullResult.reflections.length === 2, 'Full test should capture both open-ended reflection answers side-by-side');
-assert(fullResult.disclaimer.includes('reflection, self-discovery, and fun'), 'Result includes required disclaimer notice');
+  assert(fullResult.overall_score > 80, 'Overall score for near-identical answers should be > 80');
+  assert(fullResult.conflict_flags.length > 0, 'Full test should detect at least 1 complementary conflict flag');
+  assert(fullResult.reflections.length === 2, 'Full test should capture both open-ended reflection answers side-by-side');
+  assert(fullResult.disclaimer.includes('reflection, self-discovery, and fun'), 'Result includes required disclaimer notice');
 
-console.log(`\n=== TEST RESULTS: ${passedTests}/${totalTests} PASSED ===`);
+  console.log(`\n=== TEST RESULTS: ${passedTests}/${totalTests} PASSED ===`);
+}
+
+runTests().catch(err => {
+  console.error('Test execution error:', err);
+  process.exit(1);
+});
+
