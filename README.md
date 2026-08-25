@@ -1,428 +1,337 @@
-# 💖 Heartalign — Interactive Couples Compatibility Engine
+<img src="https://raw.githubusercontent.com/varunraj-2005/Heartalign/main/assets/heartbeat.svg" width="46" align="right" alt="beating heart"/>
 
 <div align="center">
 
-![Heartalign Banner](https://img.shields.io/badge/Heartalign-Couples%20Compatibility%20Engine-ff6b9d?style=for-the-badge&logo=heart&logoColor=white)
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:E63946,100:FFFFFF&height=210&section=header&text=Heartalign&fontSize=54&fontColor=FFFFFF&animation=fadeIn&fontAlignY=38&desc=Where%20Compatibility%20Meets%20Code&descAlignY=58&descSize=18&descColor=FFFFFF" width="100%"/>
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express-4.21-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![Groq AI](https://img.shields.io/badge/AI%20Powered-Groq%20SDK-f36e21?style=for-the-badge&logo=openai&logoColor=white)](https://groq.com/)
-[![License](https://img.shields.io/badge/License-ISC-purple?style=for-the-badge)](LICENSE)
-
-*A full-stack, weighted compatibility scoring engine & AI-powered relationship insight platform designed for couples.*
-
-[🚀 Quick Start](#-quick-start) • [✨ Key Features](#-key-features) • [📊 Scoring Matrix](#-scoring-matrix--weights) • [📡 API Reference](#-api-endpoints-reference) • [🏗 Architecture](#-system-architecture) • [🧪 Testing](#-testing)
-
-</div>
-
----
-
-## 📑 Table of Contents
-
-- [💖 Project Overview](#-project-overview)
-- [✨ Key Features](#-key-features)
-- [🏗 System Architecture](#-system-architecture)
-- [🔄 Session & Quiz Workflow](#-session--quiz-workflow)
-- [📊 Scoring Matrix & Weights](#-scoring-matrix--weights)
-- [📡 API Endpoints Reference](#-api-endpoints-reference)
-- [🚀 Quick Start & Installation](#-quick-start)
-- [🛠 Environment Variables](#-environment-variables)
-- [🧪 Testing](#-testing)
-- [📁 Directory Structure](#-directory-structure)
-- [❓ Frequently Asked Questions](#-frequently-asked-questions)
-
----
-
-## 💖 Project Overview
-
-**Heartalign** is an interactive compatibility assessment app that allows couples to take synced, multi-category relationship quizzes and receive weighted alignment scores, conflict friction alerts, side-by-side reflections, and AI-synthesized coaching tips.
-
-Unlike simple quizzes that just sum up matches, Heartalign employs a **sophisticated mathematical scoring engine** featuring:
-- **Category-weighted evaluation** across 6 key pillars of relationship health.
-- **Partial match matrices** for non-binary multiple-choice answers.
-- **Complementary conflict pair detection** to identify opposing attachment or conflict resolution styles.
-- **AI synthesis using Groq SDK** for personalized relationship summaries.
-- **Historical score tracking** to track couple alignment over time.
-
----
-
-## ✨ Key Features
-
-<details open>
-<summary><b>🔥 Core Application Highlights (Click to expand/collapse)</b></summary>
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=800&color=E63946&center=true&vCenter=true&width=650&lines=Weighted+Compatibility+Scoring+Engine;AI-Powered+Relationship+Insights;Built+for+Couples%2C+Powered+by+Code+%F0%9F%92%96" alt="Typing SVG" />
 
 <br/>
 
-### 1. ⚖️ Weighted 6-Category Compatibility Engine
-Scores are computed dynamically using weighted contributions across:
-- 🏛 **Values & Life Goals (25%)** — Kids, finances, career alignment, location preferences.
-- 🤝 **Trust & Communication (25%)** — Emotional sharing, transparency, privacy expectations.
-- ⚡ **Conflict Style (15%)** — Processing speed, de-escalation habits, discussion preferences.
-- 💞 **Intimacy & Affection (15%)** — Love languages, physical affection frequency, vulnerability.
-- 🏡 **Daily Life & Habits (10%)** — Daily rhythms, chore distribution, weekend preferences.
-- 🍕 **Fun & Trivia (10%)** — Date night tastes, food cravings, travel styles.
+[![Live Demo](https://img.shields.io/badge/💖_TRY_IT_OUT-E63946?style=for-the-badge&labelColor=FFFFFF)](https://github.com/varunraj-2005/Heartalign)
+[![Stars](https://img.shields.io/github/stars/varunraj-2005/Heartalign?style=for-the-badge&labelColor=FFFFFF&color=E63946)](https://github.com/varunraj-2005/Heartalign/stargazers)
+[![Forks](https://img.shields.io/github/forks/varunraj-2005/Heartalign?style=for-the-badge&labelColor=FFFFFF&color=E63946)](https://github.com/varunraj-2005/Heartalign/network/members)
+[![License](https://img.shields.io/badge/LICENSE-ISC-FFFFFF?style=for-the-badge&labelColor=E63946)](#-license)
 
-### 2. ⚡ Live Partner Invite & Async Synchronization
-- **Instant Invite Link Generation**: Partner 1 creates a session and gets a readable invite code (e.g. `HEART-7X92`).
-- **Real-Time Poll Status**: Real-time polling via `/api/sessions/:id/status` lets each partner know when the other has completed the quiz.
-- **Atomic Double-Completion Execution**: Compatibility calculations trigger automatically as soon as both partners submit.
+<br/>
 
-### 3. 🤖 AI Relationship Insights (Groq Cloud SDK Integration)
-- Powered by `groq-sdk` with LLM prompt engineering.
-- Generates tailored relationship summaries highlighting key strengths, communication tips, and growth opportunities.
-- **Built-in Fallback**: If an API key isn't provided, Heartalign falls back seamlessly to rule-based insight generation.
+<img src="https://img.shields.io/badge/TypeScript-FFFFFF?style=for-the-badge&logo=typescript&logoColor=E63946"/>
+<img src="https://img.shields.io/badge/Node.js-FFFFFF?style=for-the-badge&logo=node.js&logoColor=E63946"/>
+<img src="https://img.shields.io/badge/Express-FFFFFF?style=for-the-badge&logo=express&logoColor=E63946"/>
+<img src="https://img.shields.io/badge/Groq_AI-FFFFFF?style=for-the-badge&logo=openai&logoColor=E63946"/>
+<img src="https://img.shields.io/badge/LowDB-FFFFFF?style=for-the-badge&logo=json&logoColor=E63946"/>
 
-### 4. 🚩 Conflict Pair & Friction Detection
-- Detects complementary conflict pairs (e.g., *Direct vs Avoidant* conflict approaches).
-- Flags high-friction differences with constructive coaching notes.
+</div>
 
-### 5. 📈 Historical Couples Alignment Tracking
-- Retains session history per `couple_id`.
-- Track progress over time to see how relationship alignment evolves across multiple quiz sessions.
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%" height="4">
 
-### 6. 🎨 Premium Glassmorphism UI
-- Animated liquid SVG heart loader.
-- Interactive category progress bar and option cards.
-- Floating background particle animations and responsive desktop/mobile layouts.
+## 📖 Table of Contents
 
-</details>
+<div align="center">
 
----
+| [💖 Overview](#-overview) | [✨ Features](#-features) | [🏗️ Architecture](#️-architecture) | [🔄 Workflow](#-session--quiz-workflow) |
+|:---:|:---:|:---:|:---:|
+| **[📊 Scoring Matrix](#-scoring-matrix--weights)** | **[📡 API Reference](#-api-endpoints-reference)** | **[🚀 Getting Started](#-getting-started)** | **[🔐 Env Variables](#-environment-variables)** |
+| **[📁 Project Structure](#-project-structure)** | **[🧪 Testing](#-testing)** | **[❓ FAQ](#-faq)** | **[📬 Contact](#-contact)** |
 
-## 🏗 System Architecture
+</div>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%" height="4">
+
+## 💖 Overview
+
+**Heartalign** is a full-stack, AI-assisted **compatibility engine** built for couples. Two partners take a synced, multi-category quiz — Heartalign runs the answers through a **weighted mathematical scoring model**, flags friction points, and (optionally) asks **Groq AI** to write a personalized relationship summary.
+
+It's not a "count the matches" quiz. It's a real scoring pipeline:
+
+> 🔍 Category weighting → 📐 partial-match matrices → 🚩 conflict-pair detection → 🤖 AI synthesis (with a rule-based fallback if no API key is set)
+
+<div align="center">
+<img src="https://img.shields.io/badge/Status-Active_Development-E63946?style=flat-square&labelColor=FFFFFF"/>
+<img src="https://img.shields.io/badge/Built_With-TypeScript_%2B_Express-E63946?style=flat-square&labelColor=FFFFFF"/>
+</div>
+
+<br/>
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 💑 For Couples
+- 🔗 Instant invite-code session creation (`HEART-XXXX`)
+- ⏱️ Real-time "has my partner finished?" polling
+- 📝 Multi-category, mixed-format quiz (scale + multiple choice)
+- 🗂️ Side-by-side reflection answers to spark conversation
+- 📈 Historical compatibility tracking per couple
+
+</td>
+<td width="50%" valign="top">
+
+### 🧠 Under the Hood
+- ⚖️ 6-category **weighted scoring engine**
+- 🧮 Partial-match matrices for nuanced answers
+- 🚩 Complementary conflict-pair detection
+- 🤖 Groq AI-generated relationship insights
+- 🛟 Automatic rule-based fallback if no API key
+
+</td>
+</tr>
+</table>
+
+### 🎨 Interface
+- Glassmorphism UI with a **liquid SVG heart loader**
+- Animated progress bar + floating background particles
+- Fully responsive across desktop and mobile
+
+<br/>
+
+## 🏗️ Architecture
 
 ```mermaid
-graph TD
-    subgraph Frontend Client
-        A[HTML5 / CSS3 / Vanilla JS] -->|HTTP / REST| B[Express API Gateway]
-    end
+flowchart LR
+    A["💻 Frontend<br/>HTML / CSS / Vanilla JS"] -->|REST| B["🚀 Express API Gateway"]
+    B --> C["🌱 Question Bank<br/>Seed Data"]
+    B --> D[("🗄️ LowDB<br/>heartalign.db.json")]
+    B --> E["⚖️ Scoring Engine"]
+    E --> F["🧮 Weighted Math +<br/>Partial Matrix"]
+    E --> G["🚩 Conflict Flag<br/>Detector"]
+    E --> H["🤖 Groq AI SDK /<br/>Fallback Synthesizer"]
+    F & G & H --> I["📊 Results JSON +<br/>Insights Dashboard"]
 
-    subgraph Backend Engine
-        B --> C[Question Bank Seed Data]
-        B --> D[LowDB JSON Store - heartalign.db.json]
-        B --> E[Scoring Engine Service]
-        E --> F[Weighted Math & Partial Matrix Engine]
-        E --> G[Conflict Flag Detector]
-        E --> H[Groq AI SDK / Fallback Synthesizer]
-    end
-
-    subgraph Output Data
-        F & G & H --> I[Score Result JSON & UI Insights Dashboard]
-    end
+    style A fill:#FFFFFF,stroke:#E63946,color:#E63946
+    style B fill:#E63946,stroke:#E63946,color:#FFFFFF
+    style C fill:#FFFFFF,stroke:#E63946,color:#E63946
+    style D fill:#FFFFFF,stroke:#E63946,color:#E63946
+    style E fill:#E63946,stroke:#E63946,color:#FFFFFF
+    style F fill:#FFFFFF,stroke:#E63946,color:#E63946
+    style G fill:#FFFFFF,stroke:#E63946,color:#E63946
+    style H fill:#FFFFFF,stroke:#E63946,color:#E63946
+    style I fill:#E63946,stroke:#E63946,color:#FFFFFF
 ```
 
----
+<br/>
 
 ## 🔄 Session & Quiz Workflow
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor P1 as Partner 1
-    actor P2 as Partner 2
+    actor P1 as 💑 Partner 1
+    actor P2 as 💑 Partner 2
     participant API as Heartalign API
     participant Engine as Scoring & AI Engine
     participant DB as Database
 
     P1->>API: POST /api/sessions (partner1_name)
-    API-->>P1: Session Created (Invite Code: HEART-XXXX, share_url)
-    P2->>API: POST /api/sessions/join (invite_code, partner2_name)
-    API-->>P2: Joined Session successfully!
+    API-->>P1: Invite Code (HEART-XXXX) + share_url
+    P2->>API: POST /api/sessions/join (invite_code)
+    API-->>P2: Joined session ✅
     P1->>API: POST /api/sessions/:id/answers
     P2->>API: POST /api/sessions/:id/answers
     API->>Engine: Compute weighted score + conflict flags
-    Engine->>Groq AI: Generate personalized relationship insights
-    Groq AI-->>Engine: AI synthesis output
     Engine->>DB: Save score result
     P1 & P2->>API: GET /api/sessions/:id/results
-    API-->>P1 & P2: Full Compatibility Report & Dashboard
+    API-->>P1 & P2: 💖 Full Compatibility Report
 ```
 
----
+<br/>
 
 ## 📊 Scoring Matrix & Weights
 
-| Category | Weight | Question Types Used | Key Focus Area |
-| :--- | :---: | :--- | :--- |
-| **Values & Life Goals** | `25%` | Multiple Choice Match | Marriage, children, financial philosophy, career balance |
-| **Trust & Communication** | `25%` | Scale (1-5), Multiple Choice | Transparency, phone privacy, check-in frequency |
-| **Conflict Style** | `15%` | Multiple Choice Match | Processing cooling period, apology styles, confrontation |
-| **Intimacy & Affection** | `15%` | Scale (1-5), Multiple Choice | Primary love language, PDA comfort, affection frequency |
-| **Daily Life & Habits** | `10%` | Scale (1-5), Multiple Choice | Sleep schedules, household chore splitting, weekend routines |
-| **Fun & Trivia** | `10%` | Multiple Choice Match | Ideal date night, food preferences, vacation styles |
+| Category | Weight | Focus Area |
+|---|:---:|---|
+| 🏛 **Values & Life Goals** | `25%` | Marriage, kids, finances, career alignment |
+| 🤝 **Trust & Communication** | `25%` | Transparency, privacy, check-in frequency |
+| ⚡ **Conflict Style** | `15%` | Cooling periods, apology styles, confrontation |
+| 💞 **Intimacy & Affection** | `15%` | Love languages, PDA comfort, affection frequency |
+| 🏡 **Daily Life & Habits** | `10%` | Sleep schedules, chores, weekend routines |
+| 🍕 **Fun & Trivia** | `10%` | Date nights, food, travel style |
 
-<details>
-<summary><b>📐 How Question Scoring Algorithms Work</b></summary>
+**How the math works:**
+
+- **Scale (1–5) questions:** `Score = max(0, 100 - |V1 - V2| × 25)` — a difference of 0 = 100% match, a difference of 4 = 0% match.
+- **Multiple-choice questions:** exact match = 100%; partial matches use a predefined lookup matrix; certain answer pairs trigger a flagged **conflict pair**.
+- **Open-ended reflections:** unscored, shown side-by-side to spark discussion.
 
 <br/>
-
-1. **Scale 1-to-5 Questions**:
-   $$\text{Score} = \max(0, 100 - |V_1 - V_2| \times 25)$$
-   - Difference of `0` $\rightarrow$ `100%` match
-   - Difference of `1` $\rightarrow$ `75%` match
-   - Difference of `2` $\rightarrow$ `50%` match
-   - Difference of `4` $\rightarrow$ `0%` match
-
-2. **Multiple Choice Match Questions**:
-   - **Exact Match**: `100%` (or customized `exact_match_score`).
-   - **Partial Match**: Looks up exact pair score in the predefined `partial_matrix`.
-   - **Complementary Conflict Rules**: Checks if pair triggers a flagged conflict pair (e.g. `direct_confrontation` vs `need_time`).
-
-3. **Open-Ended Reflections**:
-   - Qualitative non-scored questions displayed side-by-side on the results dashboard for deep conversation starters.
-
-</details>
-
----
 
 ## 📡 API Endpoints Reference
 
-<details open>
-<summary><b>🔍 Expand Interactive API Reference Card</b></summary>
+<details>
+<summary><b>🔍 Click to expand full endpoint list</b></summary>
 
 <br/>
 
-### 1. Health Check
-- **`GET /api/health`**
-- **Description**: Returns server status, version, and server timestamp.
-- **Sample Response**:
-  ```json
-  {
-    "status": "ok",
-    "app": "Heartalign Backend API & Scoring Engine",
-    "version": "1.0.0",
-    "timestamp": "2026-08-22T16:25:46.000Z"
-  }
-  ```
+**Health Check**
+```
+GET /api/health
+```
 
----
+**Question Bank**
+```
+GET /api/questions
+GET /api/questions?category=Conflict%20Style
+```
 
-### 2. Fetch Question Bank
-- **`GET /api/questions`**
-- **Description**: Returns all seed questions grouped across categories.
-- **Query Parameters**: Optional `?category=Conflict%20Style`
+**Sessions**
+```
+POST /api/sessions                      # Create session (Partner 1)
+GET  /api/sessions/code/:code           # Look up by invite code
+POST /api/sessions/join                 # Join session (Partner 2)
+GET  /api/sessions/:id/status           # Real-time completion status
+POST /api/sessions/:id/answers          # Submit quiz answers
+GET  /api/sessions/:id/results          # Get full compatibility report
+GET  /api/couples/:coupleId/history     # Get couple's quiz history
+```
 
----
-
-### 3. Session Operations
-
-#### ➕ Create New Session (Partner 1)
-- **`POST /api/sessions`**
-- **Request Body**:
-  ```json
-  {
-    "partner1_name": "Alex"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "success": true,
-    "session": {
-      "session_id": "ses_9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
-      "invite_code": "HEART-8K92",
-      "couple_id": "cpl_a1b2c3d4",
-      "partner1_name": "Alex",
-      "status": "waiting_for_partner2",
-      "share_url": "http://localhost:505/join/HEART-8K92"
-    }
-  }
-  ```
-
-#### 🔍 Lookup Session by Invite Code
-- **`GET /api/sessions/code/:code`**
-- **Example**: `GET /api/sessions/code/HEART-8K92`
-
-#### 🤝 Join Session (Partner 2)
-- **`POST /api/sessions/join`**
-- **Request Body**:
-  ```json
-  {
-    "invite_code": "HEART-8K92",
-    "partner2_name": "Taylor"
-  }
-  ```
-
-#### ⏱ Check Real-Time Session Status
-- **`GET /api/sessions/:id/status`**
-- **Response**:
-  ```json
-  {
-    "success": true,
+**Example — create a session:**
+```json
+{
+  "partner1_name": "Alex"
+}
+```
+```json
+{
+  "success": true,
+  "session": {
     "session_id": "ses_9b1deb4d",
-    "status": "in_progress",
-    "partner1": { "id": "ptr_111", "name": "Alex", "has_submitted": true },
-    "partner2": { "id": "ptr_222", "name": "Taylor", "has_submitted": false },
-    "both_completed": false
+    "invite_code": "HEART-8K92",
+    "status": "waiting_for_partner2",
+    "share_url": "http://localhost:505/join/HEART-8K92"
   }
-  ```
-
-#### 📝 Submit Quiz Answers
-- **`POST /api/sessions/:id/answers`**
-- **Request Body**:
-  ```json
-  {
-    "partner_id": "ptr_111",
-    "answers": {
-      "q_val_1": "both_work_shared",
-      "q_val_2": 4,
-      "q_trust_1": 5,
-      "q_con_1": "cool_off_first"
-    }
-  }
-  ```
-
-#### 🏆 Get Compatibility Results
-- **`GET /api/sessions/:id/results`**
-- **Response Highlights**: Overall weighted score, category breakdowns, conflict flags, side-by-side reflections, and AI relationship analysis.
-
-#### 📈 Get Couple Quiz History
-- **`GET /api/couples/:coupleId/history`**
+}
+```
 
 </details>
 
----
+<br/>
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (`v18.0.0` or higher)
-- `npm` (`v9.0.0` or higher)
+New to Git? Just copy each command below into your terminal, one at a time.
 
-### 1. Clone Repository & Install Dependencies
+### ✅ Prerequisites
+
+| Requirement | Version |
+|---|---|
+| Node.js | `v18.0.0+` |
+| npm | `v9.0.0+` |
+
+### 1️⃣ Clone & install
 
 ```bash
-# Clone repository
 git clone https://github.com/varunraj-2005/Heartalign.git
-cd Heartalign
-
-# Install backend dependencies
-cd backend
+cd Heartalign/backend
 npm install
 ```
 
-### 2. Configure Environment
+### 2️⃣ Configure environment
 
-Create `.env` file inside `backend/`:
+Create a `.env` file inside `backend/` (see [Environment Variables](#-environment-variables)).
 
-```env
-PORT=505
-GROQ_API_KEY=your_groq_api_key_here
-```
-> *Note: If `GROQ_API_KEY` is omitted, Heartalign automatically uses built-in smart fallback insights.*
-
-### 3. Run Development Server
+### 3️⃣ Run the dev server
 
 ```bash
-# Start backend server with auto-reload (ts-node-dev)
 npm run dev
 ```
 
-Server will output:
-```text
+You should see:
+
+```
 ======================================================
 💖 Heartalign Backend API is running on port 505
 🌍 Interactive API Tester UI: http://localhost:505
 ======================================================
 ```
 
-Open `http://localhost:505` in your browser to launch the web client!
+Open **http://localhost:505** to launch the app.
 
----
+<br/>
 
-## 🛠 Environment Variables
+## 🔐 Environment Variables
 
 | Variable | Type | Default | Required? | Description |
-| :--- | :--- | :--- | :---: | :--- |
-| `PORT` | `number` | `505` | No | Port on which Express server listens |
-| `GROQ_API_KEY` | `string` | `undefined` | Optional | API Key for Groq Cloud LLM relationship analysis |
+|---|---|---|:---:|---|
+| `PORT` | `number` | `505` | No | Port the Express server listens on |
+| `GROQ_API_KEY` | `string` | `undefined` | Optional | Enables Groq AI relationship insights — falls back to rule-based insights if omitted |
 
----
+<br/>
+
+## 📁 Project Structure
+
+```
+Heartalign/
+├── backend/
+│   ├── src/
+│   │   ├── data/questions.seed.ts       # Question bank across 6 pillars
+│   │   ├── db/database.ts               # LowDB persistence layer
+│   │   ├── routes/                      # question & session routes
+│   │   ├── services/scoringEngine.ts    # Weighted math + AI synthesis
+│   │   ├── types/index.ts               # TS interfaces & weight mapping
+│   │   └── server.ts                    # Express entry point
+│   ├── tests/scoring.test.ts
+│   ├── heartalign.db.json
+│   └── package.json
+├── frontend/
+│   ├── index.html                       # Glassmorphic UI + liquid heart loader
+│   ├── style.css
+│   └── app.js
+├── assets/
+│   └── heartbeat.svg                    # Animated heart used in this README
+└── README.md
+```
+
+<br/>
 
 ## 🧪 Testing
-
-Heartalign features automated unit & integration test suites for the weighted scoring math, partial match matrices, and conflict detection logic.
-
-Run tests via:
 
 ```bash
 cd backend
 npm test
 ```
 
-Sample Output:
-```text
-=========================================================
-🧪 Running Heartalign Scoring Engine Test Suite
-=========================================================
-
-✔ Test 1: Scale Scoring (0-diff=100, 1-diff=75, 4-diff=0) -> PASSED
-✔ Test 2: Multiple Choice Match & Partial Matrix -> PASSED
-✔ Test 3: Conflict Flag Pair Trigger -> PASSED
-✔ Test 4: Full Compatibility Calculation & Category Weighting -> PASSED
-
-=========================================================
-🎉 All 4 Test Suites Passed Successfully!
-=========================================================
+```
+✔ Scale Scoring (0-diff=100, 4-diff=0)         → PASSED
+✔ Multiple Choice Match & Partial Matrix        → PASSED
+✔ Conflict Flag Pair Trigger                    → PASSED
+✔ Full Compatibility Calculation & Weighting    → PASSED
 ```
 
----
+<br/>
 
-## 📁 Directory Structure
+## ❓ FAQ
 
-```files
-Heartalign/
-├── backend/
-│   ├── src/
-│   │   ├── data/
-│   │   │   └── questions.seed.ts      # Seed question bank across 6 pillars
-│   │   ├── db/
-│   │   │   └── database.ts            # LowDB JSON persistence layer
-│   │   ├── routes/
-│   │   │   ├── questionRoutes.ts      # Question fetching API
-│   │   │   └── sessionRoutes.ts       # Session lifecycle & results API
-│   │   ├── services/
-│   │   │   └── scoringEngine.ts       # Weighted math, conflict detection & Groq AI
-│   │   ├── types/
-│   │   │   └── index.ts               # TypeScript interfaces & weights mapping
-│   │   └── server.ts                  # Express application entry point
-│   ├── tests/
-│   │   └── scoring.test.ts            # Automated unit testing suite
-│   ├── heartalign.db.json             # Local JSON DB storage
-│   ├── package.json
-│   └── tsconfig.json
-├── frontend/
-│   ├── index.html                     # Glassmorphic UI markup & SVG liquid loader
-│   ├── style.css                      # Modern CSS variables, grid, animations
-│   └── app.js                         # Dynamic state management & API interaction
-├── .gitignore
-└── README.md
-```
+**How is privacy handled?**
+Answers are matched server-side once both partners submit, then shown side-by-side to spark conversation.
 
----
+**Can partners take the quiz at different times?**
+Yes — session state persists. Partner 2 can join and finish whenever they're ready.
 
-## ❓ Frequently Asked Questions
+**What if I skip the Groq API key?**
+No problem — Heartalign automatically switches to built-in rule-based insights.
 
-<details>
-<summary><b>💬 How does Heartalign handle privacy & answers visibility?</b></summary>
-Answers are securely matched on the server when both partners submit. Individual responses are presented side-by-side in the results view to spark healthy discussion.
-</details>
+<br/>
 
-<details>
-<summary><b>💬 Can Partner 1 and Partner 2 take the quiz at different times?</b></summary>
-Yes! Sessions persist state in the backend database. Partner 1 can complete their answers, send the invite code `HEART-XXXX` to Partner 2, and Partner 2 can finish whenever they are free. Results unlock automatically when both complete.
-</details>
+## 📜 License
 
-<details>
-<summary><b>💬 What happens if I don't set up a Groq API Key?</b></summary>
-No problem! The backend automatically detects the missing key and switches to rule-based insights generation.
-</details>
+Licensed under the **ISC License**.
 
----
+<br/>
+
+## 📬 Contact
 
 <div align="center">
 
-Made with 💖 for couples everywhere. Built with TypeScript, Express & Groq AI.
+**Varun Raj**
+
+[![GitHub](https://img.shields.io/badge/GitHub-E63946?style=for-the-badge&logo=github&logoColor=FFFFFF)](https://github.com/varunraj-2005)
+
+<br/>
+
+### 💖 If Heartalign resonated with you, drop it a star!
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FFFFFF,100:E63946&height=120&section=footer" width="100%"/>
 
 </div>
