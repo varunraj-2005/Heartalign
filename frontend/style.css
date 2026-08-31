@@ -160,7 +160,7 @@ body {
 }
 
 .loader-text {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 2rem;
   font-weight: 700;
   background: var(--grad-text);
@@ -250,7 +250,7 @@ body {
 }
 
 .logo-text {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 1.3rem;
   font-weight: 700;
   background: var(--grad-text);
@@ -348,7 +348,7 @@ body {
 }
 
 .hero-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: clamp(2.4rem, 5vw, 3.8rem);
   font-weight: 700;
   line-height: 1.15;
@@ -468,7 +468,7 @@ body {
 }
 
 .fc-score {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 1.6rem;
   font-weight: 700;
   background: var(--grad-red);
@@ -506,7 +506,7 @@ body {
 }
 
 .form-card-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 1.9rem;
   font-weight: 700;
   text-align: center;
@@ -542,7 +542,7 @@ body {
   border: 1.5px solid rgba(255,255,255,0.12);
   border-radius: var(--r-md);
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   padding: 0.85rem 1.1rem;
   outline: none;
@@ -585,7 +585,7 @@ body {
 }
 
 .invite-code-value {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -676,7 +676,7 @@ body {
   gap: 0.5rem;
   border: none;
   border-radius: var(--r-md);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-weight: 600;
   cursor: pointer;
   transition:
@@ -863,7 +863,7 @@ body {
 }
 
 .question-prompt {
-  font-family: 'Love Fairy', serif;
+  font-family: var(--font-heading);
   font-size: clamp(1.2rem, 3vw, 1.55rem);
   font-weight: 600;
   line-height: 1.4;
@@ -896,7 +896,7 @@ body {
   cursor: pointer;
   transition: all var(--dur-fast) var(--ease-out);
   color: #333;
-  font-family: 'Love Fairy', sans-serif;
+  font-family: var(--font-body);
 }
 
 .option-btn:hover {
@@ -949,7 +949,7 @@ body {
   font-weight: 700;
   cursor: pointer;
   transition: all var(--dur-fast) var(--ease-spring);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   max-width: 72px;
 }
 
@@ -975,7 +975,7 @@ body {
   border: 1.5px solid #eee;
   border-radius: var(--r-md);
   color: #333;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   line-height: 1.65;
   padding: 1rem;
@@ -1038,7 +1038,7 @@ body {
 }
 
 .waiting-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 1.6rem;
   font-weight: 700;
   color: #111;
@@ -1151,7 +1151,7 @@ body {
 }
 
 .results-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 700;
   margin-bottom: 0.4rem;
@@ -1159,9 +1159,10 @@ body {
 }
 
 .results-names {
-  font-size: 1.05rem;
-  color: #444;
-  font-style: italic;
+  font-family: var(--font-romantic);
+  font-size: 1.75rem;
+  color: var(--red-500);
+  line-height: 1.3;
 }
 
 /* Score circle */
@@ -1193,7 +1194,7 @@ body {
 }
 
 .score-number {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 3.4rem;
   font-weight: 700;
   background: var(--grad-red);
@@ -1219,7 +1220,7 @@ body {
 
 /* Section headings */
 .section-heading {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
@@ -1262,7 +1263,7 @@ body {
 }
 
 .cat-score-val {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 1.2rem;
   font-weight: 700;
   background: var(--grad-red);
