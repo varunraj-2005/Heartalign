@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/varunraj-2005/Heartalign/main/assets/heartbeat.svg" width="46" align="left" alt="beating heart"/>
+<img src="https://raw.githubusercontent.com/varunraj-2005/Heartalign/main/assets/heartbeat.svg" width="40" align="left" alt="beating heart"/>
 
 <div align="center">
 
